@@ -1,12 +1,22 @@
 import { useEffect, useState } from "react";
+import styled from "styled-components";
 import { fetchCoin } from "../../utils/fetchCoins";
 
-const styles = {
-  section: {
-    display: "flex",
-    margin: "8px",
-  },
-};
+const Section = styled.section`
+  margin: 8px;
+  padding: 8px;
+  background-color: #3d3d3d;
+  a {
+    color: red;
+  }
+`;
+
+const H1 = styled.h1`
+  span {
+    margin: 8px;
+    cursor: pointer;
+  }
+`;
 
 const CoinDetails = () => {
   const [coin, setCoin] = useState(null);
@@ -22,11 +32,12 @@ const CoinDetails = () => {
     <>
       {coin ? (
         <div>
-          <h1>
+          <H1>
+            <span onClick={() => console.log("back")}>👈</span>
             {coin?.name}({coin?.symbol.toUpperCase()})
-          </h1>
-          <section style={styles.section}>
-            <p>{coin.description["en"]}</p>
+          </H1>
+          <Section>
+            <p dangerouslySetInnerHTML={{ __html: coin.description["en"] }}></p>
             <ul>
               {coin?.tickers.map((ticker, index) => {
                 return (
@@ -37,7 +48,7 @@ const CoinDetails = () => {
                 );
               })}
             </ul>
-          </section>
+          </Section>
         </div>
       ) : (
         <h1>Loading...</h1>
